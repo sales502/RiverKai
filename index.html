@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打字效果 - Welcome</title>
+    <style>
+        /* 基础样式美化 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .type-container {
+            font-size: 4rem;
+            color: #4cd137;
+            position: relative;
+        }
+        /* 光标样式 */
+        .type-container::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60px;
+            background-color: #4cd137;
+            animation: blink 0.8s infinite;
+        }
+        /* 光标闪烁动画 */
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        /* 适配小屏幕 */
+        @media (max-width: 500px) {
+            .type-container {
+                font-size: 2.5rem;
+            }
+            .type-container::after {
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="type-container" id="typeText"></div>
+
+    <script>
+        // 需要显示的文本
+        const text = "welcome";
+        // 打字速度，单位毫秒，数值越小速度越快
+        const speed = 200;
+        // 获取显示文本的元素
+        const typeElement = document.getElementById("typeText");
+        // 当前字符索引
+        let index = 0;
+
+        // 打字函数
+        function typeWriter() {
+            if (index < text.length) {
+                // 逐个添加字符
+                typeElement.textContent += text.charAt(index);
+                index++;
+                // 递归调用，实现连续打字效果
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        // 页面加载完成后启动打字效果
+        window.onload = typeWriter;
+    </script>
+</body>
+</html>
